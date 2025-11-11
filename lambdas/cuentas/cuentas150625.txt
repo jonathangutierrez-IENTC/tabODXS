@@ -1,0 +1,497 @@
+[
+    {
+        "recordType": "customrecord_ientc_service_master",
+        "id": "218100",
+        "values": {
+            "internalid": [
+                {
+                    "value": "218100",
+                    "text": "218100"
+                }
+            ],
+            "externalid": [],
+            "name": "FO101-0063100",
+            "custrecord_ientc_cs_ismaster": false,
+            "custrecord_ientc_cs_reference": [],
+            "custrecord_ientc_cs_servicestatus": [
+                {
+                    "value": "2",
+                    "text": "Inactivo"
+                }
+            ],
+            "custrecord_ientc_cs_service": [
+                {
+                    "value": "3",
+                    "text": "Fibra Óptica"
+                }
+            ],
+            "custrecord_ientc_cs_type": [
+                {
+                    "value": "1",
+                    "text": "Residencial"
+                }
+            ],
+            "custrecord_ientc_cs_forcedterm": false,
+            "custrecord_ientc_cs_forcedtermvalue": [
+                {
+                    "value": "1",
+                    "text": "0 Meses"
+                }
+            ],
+            "custrecord_ientc_cs_invoicereq": false,
+            "custrecord_ientc_cs_item": [
+                {
+                    "value": "10411",
+                    "text": "Internet Fibra Óptica"
+                }
+            ],
+            "custrecord_ientc_cs_phone": "0000000000",
+            "custrecord_ientc_cs_isesim": false,
+            "custrecord_ientc_cs_total": "5100.00",
+            "custrecord_ientc_cs_subtotal": "4396.55",
+            "created": "15/06/2025 9:45",
+            "owner": [
+                {
+                    "value": "343",
+                    "text": "846 Integraciones Netsuite"
+                }
+            ],
+            "custrecord_ientc_cs_activatedate": "",
+            "custrecord_ientc_cs_canceldate": "",
+            "custrecord_ientc_cs_cancelreason": "",
+            "custrecord_ientc_cs_canceledby": [],
+            "custrecord_ientc_cs_parent": [
+                {
+                    "value": "352498",
+                    "text": "78075 Junior david Facundo aguirre"
+                }
+            ],
+            "custrecord_ientc_cs_parent.custentity_mx_rfc": "XAXX010101000",
+            "custrecord_ientc_cs_parent.custentity_mx_sat_registered_name": "Junior david Facundo aguirre",
+            "custrecord_ientc_cs_parent.custentity_ientc_crm_secteconomico": [
+                {
+                    "value": "12",
+                    "text": "55 CorporativosT"
+                }
+            ],
+            "custrecord_ientc_cs_state": [
+                {
+                    "value": "514",
+                    "text": "Estado de México"
+                }
+            ],
+            "custrecord_ientc_cs_municipio": [
+                {
+                    "value": "734",
+                    "text": "Naucalpan de Juárez"
+                }
+            ],
+            "custrecord_ientc_cs_colonia": [
+                {
+                    "value": "70421",
+                    "text": "Lomas de Sotelo"
+                }
+            ],
+            "custrecord_ientc_cs_localidad": "70421",
+            "custrecord_ientc_cs_latitude": "19.453685",
+            "custrecord_ientc_cs_longitude": "-99.2170952",
+            "custrecord_ientc_cs_dirreference": ""
+        }
+    },
+    {
+        "recordType": "customrecord_ientc_service_master",
+        "id": "218102",
+        "values": {
+            "internalid": [
+                {
+                    "value": "218102",
+                    "text": "218102"
+                }
+            ],
+            "externalid": [],
+            "name": "FO101-0063102",
+            "custrecord_ientc_cs_ismaster": false,
+            "custrecord_ientc_cs_reference": [],
+            "custrecord_ientc_cs_servicestatus": [
+                {
+                    "value": "2",
+                    "text": "Inactivo"
+                }
+            ],
+            "custrecord_ientc_cs_service": [
+                {
+                    "value": "3",
+                    "text": "Fibra Óptica"
+                }
+            ],
+            "custrecord_ientc_cs_type": [
+                {
+                    "value": "1",
+                    "text": "Residencial"
+                }
+            ],
+            "custrecord_ientc_cs_forcedterm": false,
+            "custrecord_ientc_cs_forcedtermvalue": [
+                {
+                    "value": "1",
+                    "text": "0 Meses"
+                }
+            ],
+            "custrecord_ientc_cs_invoicereq": false,
+            "custrecord_ientc_cs_item": [
+                {
+                    "value": "10411",
+                    "text": "Internet Fibra Óptica"
+                }
+            ],
+            "custrecord_ientc_cs_phone": "0000000000",
+            "custrecord_ientc_cs_isesim": false,
+            "custrecord_ientc_cs_total": "3557.00",
+            "custrecord_ientc_cs_subtotal": "3066.38",
+            "created": "15/06/2025 14:41",
+            "owner": [
+                {
+                    "value": "343",
+                    "text": "846 Integraciones Netsuite"
+                }
+            ],
+            "custrecord_ientc_cs_activatedate": "",
+            "custrecord_ientc_cs_canceldate": "",
+            "custrecord_ientc_cs_cancelreason": "",
+            "custrecord_ientc_cs_canceledby": [],
+            "custrecord_ientc_cs_parent": [
+                {
+                    "value": "352998",
+                    "text": "78081 JUVENAL BAUTISTA"
+                }
+            ],
+            "custrecord_ientc_cs_parent.custentity_mx_rfc": "BAHJ580911QGA",
+            "custrecord_ientc_cs_parent.custentity_mx_sat_registered_name": "Fisica",
+            "custrecord_ientc_cs_parent.custentity_ientc_crm_secteconomico": [
+                {
+                    "value": "12",
+                    "text": "55 CorporativosT"
+                }
+            ],
+            "custrecord_ientc_cs_state": [
+                {
+                    "value": "521",
+                    "text": "Querétaro"
+                }
+            ],
+            "custrecord_ientc_cs_municipio": [
+                {
+                    "value": "1819",
+                    "text": "Huimilpan"
+                }
+            ],
+            "custrecord_ientc_cs_colonia": [
+                {
+                    "value": "109223",
+                    "text": "Los Cues"
+                }
+            ],
+            "custrecord_ientc_cs_localidad": "109223",
+            "custrecord_ientc_cs_latitude": "20.5040031",
+            "custrecord_ientc_cs_longitude": "-100.2666572",
+            "custrecord_ientc_cs_dirreference": ""
+        }
+    },
+    {
+        "recordType": "customrecord_ientc_service_master",
+        "id": "218103",
+        "values": {
+            "internalid": [
+                {
+                    "value": "218103",
+                    "text": "218103"
+                }
+            ],
+            "externalid": [],
+            "name": "FO101-0063103",
+            "custrecord_ientc_cs_ismaster": false,
+            "custrecord_ientc_cs_reference": [],
+            "custrecord_ientc_cs_servicestatus": [
+                {
+                    "value": "1",
+                    "text": "Activo"
+                }
+            ],
+            "custrecord_ientc_cs_service": [
+                {
+                    "value": "3",
+                    "text": "Fibra Óptica"
+                }
+            ],
+            "custrecord_ientc_cs_type": [
+                {
+                    "value": "1",
+                    "text": "Residencial"
+                }
+            ],
+            "custrecord_ientc_cs_forcedterm": false,
+            "custrecord_ientc_cs_forcedtermvalue": [
+                {
+                    "value": "1",
+                    "text": "0 Meses"
+                }
+            ],
+            "custrecord_ientc_cs_invoicereq": false,
+            "custrecord_ientc_cs_item": [
+                {
+                    "value": "10411",
+                    "text": "Internet Fibra Óptica"
+                }
+            ],
+            "custrecord_ientc_cs_phone": "0000000000",
+            "custrecord_ientc_cs_isesim": false,
+            "custrecord_ientc_cs_total": "3557.00",
+            "custrecord_ientc_cs_subtotal": "3066.38",
+            "created": "15/06/2025 15:01",
+            "owner": [
+                {
+                    "value": "343",
+                    "text": "846 Integraciones Netsuite"
+                }
+            ],
+            "custrecord_ientc_cs_activatedate": "21/06/2025 20:37:10",
+            "custrecord_ientc_cs_canceldate": "",
+            "custrecord_ientc_cs_cancelreason": "",
+            "custrecord_ientc_cs_canceledby": [],
+            "custrecord_ientc_cs_parent": [
+                {
+                    "value": "352999",
+                    "text": "78082 JUVENAL BAUTISTA"
+                }
+            ],
+            "custrecord_ientc_cs_parent.custentity_mx_rfc": "BAHJ580911QGA",
+            "custrecord_ientc_cs_parent.custentity_mx_sat_registered_name": "Fisica",
+            "custrecord_ientc_cs_parent.custentity_ientc_crm_secteconomico": [
+                {
+                    "value": "12",
+                    "text": "55 CorporativosT"
+                }
+            ],
+            "custrecord_ientc_cs_state": [
+                {
+                    "value": "521",
+                    "text": "Querétaro"
+                }
+            ],
+            "custrecord_ientc_cs_municipio": [
+                {
+                    "value": "1819",
+                    "text": "Huimilpan"
+                }
+            ],
+            "custrecord_ientc_cs_colonia": [
+                {
+                    "value": "109223",
+                    "text": "Los Cues"
+                }
+            ],
+            "custrecord_ientc_cs_localidad": "Los Cues",
+            "custrecord_ientc_cs_latitude": "20.504002,",
+            "custrecord_ientc_cs_longitude": "-100.267158",
+            "custrecord_ientc_cs_dirreference": "Carretera Santa Teresa Los Cues, Huimilpan Qro."
+        }
+    },
+    {
+        "recordType": "customrecord_ientc_service_master",
+        "id": "218104",
+        "values": {
+            "internalid": [
+                {
+                    "value": "218104",
+                    "text": "218104"
+                }
+            ],
+            "externalid": [],
+            "name": "FO101-0063104",
+            "custrecord_ientc_cs_ismaster": false,
+            "custrecord_ientc_cs_reference": [],
+            "custrecord_ientc_cs_servicestatus": [
+                {
+                    "value": "1",
+                    "text": "Activo"
+                }
+            ],
+            "custrecord_ientc_cs_service": [
+                {
+                    "value": "3",
+                    "text": "Fibra Óptica"
+                }
+            ],
+            "custrecord_ientc_cs_type": [
+                {
+                    "value": "1",
+                    "text": "Residencial"
+                }
+            ],
+            "custrecord_ientc_cs_forcedterm": false,
+            "custrecord_ientc_cs_forcedtermvalue": [
+                {
+                    "value": "1",
+                    "text": "0 Meses"
+                }
+            ],
+            "custrecord_ientc_cs_invoicereq": false,
+            "custrecord_ientc_cs_item": [
+                {
+                    "value": "10411",
+                    "text": "Internet Fibra Óptica"
+                }
+            ],
+            "custrecord_ientc_cs_phone": "0000000000",
+            "custrecord_ientc_cs_isesim": false,
+            "custrecord_ientc_cs_total": "3557.00",
+            "custrecord_ientc_cs_subtotal": "3066.38",
+            "created": "15/06/2025 16:13",
+            "owner": [
+                {
+                    "value": "343",
+                    "text": "846 Integraciones Netsuite"
+                }
+            ],
+            "custrecord_ientc_cs_activatedate": "02/07/2025 13:14:35",
+            "custrecord_ientc_cs_canceldate": "",
+            "custrecord_ientc_cs_cancelreason": "",
+            "custrecord_ientc_cs_canceledby": [],
+            "custrecord_ientc_cs_parent": [
+                {
+                    "value": "353198",
+                    "text": "78083 Blanca carmen martinez Vázquez"
+                }
+            ],
+            "custrecord_ientc_cs_parent.custentity_mx_rfc": "XAXX010101000",
+            "custrecord_ientc_cs_parent.custentity_mx_sat_registered_name": "Blanca carmen martinez Vázquez",
+            "custrecord_ientc_cs_parent.custentity_ientc_crm_secteconomico": [
+                {
+                    "value": "12",
+                    "text": "55 CorporativosT"
+                }
+            ],
+            "custrecord_ientc_cs_state": [
+                {
+                    "value": "520",
+                    "text": "Puebla"
+                }
+            ],
+            "custrecord_ientc_cs_municipio": [
+                {
+                    "value": "1767",
+                    "text": "Palmar de Bravo"
+                }
+            ],
+            "custrecord_ientc_cs_colonia": [
+                {
+                    "value": "108095",
+                    "text": "De las Cruces"
+                }
+            ],
+            "custrecord_ientc_cs_localidad": "108095",
+            "custrecord_ientc_cs_latitude": "20.6918537",
+            "custrecord_ientc_cs_longitude": "-99.7091647",
+            "custrecord_ientc_cs_dirreference": ""
+        }
+    },
+    {
+        "recordType": "customrecord_ientc_service_master",
+        "id": "218101",
+        "values": {
+            "internalid": [
+                {
+                    "value": "218101",
+                    "text": "218101"
+                }
+            ],
+            "externalid": [],
+            "name": "MV104-0063101",
+            "custrecord_ientc_cs_ismaster": false,
+            "custrecord_ientc_cs_reference": [],
+            "custrecord_ientc_cs_servicestatus": [
+                {
+                    "value": "2",
+                    "text": "Inactivo"
+                }
+            ],
+            "custrecord_ientc_cs_service": [
+                {
+                    "value": "8",
+                    "text": "Movilidad"
+                }
+            ],
+            "custrecord_ientc_cs_type": [
+                {
+                    "value": "1",
+                    "text": "Residencial"
+                }
+            ],
+            "custrecord_ientc_cs_forcedterm": false,
+            "custrecord_ientc_cs_forcedtermvalue": [
+                {
+                    "value": "1",
+                    "text": "0 Meses"
+                }
+            ],
+            "custrecord_ientc_cs_invoicereq": true,
+            "custrecord_ientc_cs_item": [
+                {
+                    "value": "11509",
+                    "text": "Prepago Conéctate 2GB x 89"
+                }
+            ],
+            "custrecord_ientc_cs_phone": "0000000000",
+            "custrecord_ientc_cs_isesim": false,
+            "custrecord_ientc_cs_total": "89.00",
+            "custrecord_ientc_cs_subtotal": "76.724",
+            "created": "15/06/2025 13:47",
+            "owner": [
+                {
+                    "value": "343",
+                    "text": "846 Integraciones Netsuite"
+                }
+            ],
+            "custrecord_ientc_cs_activatedate": "",
+            "custrecord_ientc_cs_canceldate": "",
+            "custrecord_ientc_cs_cancelreason": "",
+            "custrecord_ientc_cs_canceledby": [],
+            "custrecord_ientc_cs_parent": [
+                {
+                    "value": "352701",
+                    "text": "78080 Dilan Perez Martinez"
+                }
+            ],
+            "custrecord_ientc_cs_parent.custentity_mx_rfc": "XAXX010101000",
+            "custrecord_ientc_cs_parent.custentity_mx_sat_registered_name": "Dilan Perez Martinez",
+            "custrecord_ientc_cs_parent.custentity_ientc_crm_secteconomico": [
+                {
+                    "value": "12",
+                    "text": "55 CorporativosT"
+                }
+            ],
+            "custrecord_ientc_cs_state": [
+                {
+                    "value": "530",
+                    "text": "Yucatán"
+                }
+            ],
+            "custrecord_ientc_cs_municipio": [
+                {
+                    "value": "2333",
+                    "text": "Motul"
+                }
+            ],
+            "custrecord_ientc_cs_colonia": [
+                {
+                    "value": "148527",
+                    "text": "Motul de Carrillo Puerto Centro"
+                }
+            ],
+            "custrecord_ientc_cs_localidad": "148527",
+            "custrecord_ientc_cs_latitude": "20.587968",
+            "custrecord_ientc_cs_longitude": "-100.387906",
+            "custrecord_ientc_cs_dirreference": "Casa color aqua con turqueza 3 techitos rojos a espaladas del seguro social fraccionamiento infonavit puerta de madera que doce familia perez martinez"
+        }
+    }
+]
