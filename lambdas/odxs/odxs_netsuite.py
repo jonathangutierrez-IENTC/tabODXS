@@ -4,34 +4,48 @@ from database_utils import PostgresDB, MySQLDB
 from utils import flatten_record, normalize_trandate
 from typing import Any
 from datetime import datetime, timedelta
+import os
+import json
 import sys
+import traceback #para indicar linea donde hubo error
+import re
+
 
 def lambda_handler(start_date, end_date, access_token) -> Any:
     try:
-        print('facturas_cabecera__lambda_handler')
+        print('odxs_lambda_handler')
         logs = {
-            "name": "facturas_cabecera__lambda_handler"
+            "name": "odxs_lambda_handler"
         }
-        print(access_token)
-        sys.exit()
         if access_token is None:
             logs["access_token"] = "Error al obtener access token."
             print(logs)
             raise Exception("Error al obtener access token para el ISO.")
-
+        
         # Load data
-        facturas_cabecera = iso_netsuite_generic_search(
+        odxs = iso_netsuite_generic_search(
             access_token=access_token,
             forceCache=False,
-            record_type='invoice',
-            columns='["subsidiary", "internalid","tranid","trandate","custbody_ientc_cs_related_account","currency","exchangerate","amount","amountpaid","amountremaining","custbody_ientc_external_id_mongo","custbody_ientc_fact_cancelled","custbody_ientc_invoice_type"]',
-            filters=f'[["type","anyof","CustInvc"],"AND",["mainline","is","T"],"AND",["taxline","is","F"],"AND",["systemnotes.type","ANY",""],"AND",["systemnotes.date","within","{start_date}","{end_date}"],"AND",["memo","isnot","SALDOINI 31-DIC-23"]]'
+            record_type='salesorder',
+            columns='["internalid","custbody_ientc_order_support","custbody_ientc_order_assigned_tech","custbody_ientc_order_type",' \
+            '"custbody_ientc_order_updatetype","startdate","enddate","tranid","custbody_ientc_order_odxmemo","custbody_ientc_order_status",' \
+            '"custbody_ientc_order_account","total","custbody_ientc_order_cancelby","custbody_ientc_order_account.custrecord_ientc_cs_latitude",' \
+            '"custbody_ientc_order_account.custrecord_ientc_cs_longitude", "datecreated", "salesrep"]',
+            filters=f'[["datecreated","within","{start_date}","{end_date}"],"AND",["mainline","is","T"]]'
         )
-        print(f"✅ {len(facturas_cabecera)} facturas de hoy")
-        if facturas_cabecera == None:
-            logs['facturas_cabecera'] = "Error al obtener facturas cabecera."
+        print(f"✅ {len(odxs)} odxs descargadas desde NetSuite")
+        
+        
+        if odxs == None:
+            logs['odxs'] = "Error al obtener odxs."
             print(logs)
             raise Exception("Error con la petición del servicio generico de Netsuite")
+
+        # Aplanar
+        flattened_data_cabecera = [flatten_record(rec) for rec in odxs]
+            
+
+        print(f"✅ {len(flattened_data_cabecera)} odxs de hoy")   
 
         # Connect database
         db = MySQLDB(
@@ -39,61 +53,81 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
             password="",
             host="127.0.0.1",
             port=3306,        
-            database="ientc"
+            database="olimpo-db"
         )
         db.connect()
 
-        # Flatten data 
-        flattened_data_cabecera = [flatten_record(rec) for rec in facturas_cabecera]
+
 
         # Rename keys and save in database
         for record in flattened_data_cabecera:
-            record['account_number'] = record.pop('custbody_ientc_cs_related_account_text')
-            record['total'] = record.pop('amount')
-            record['paid'] = record.pop('amountpaid')
-            record['debt'] = record.pop('amountremaining')
-            record['id_mongo'] = record.pop('custbody_ientc_external_id_mongo')
-            record['cancelled'] = record.pop('custbody_ientc_fact_cancelled')
-            record['subsidiary'] = record.pop('subsidiary_text')
-            record['numsubsidiary'] = record.pop('subsidiary_value')
-            record['date'] = normalize_trandate(record.pop('trandate', None))
+            record['technicalUser'] = record.pop('custbody_ientc_order_assigned_tech_text', None)
+            record.pop('custbody_ientc_order_assigned_tech', None)  # ✅ elimina lista si existe
+            record['createdBy'] = record.pop('salesrep_text', None)
+            record.pop('salesrep', None)  # ✅ elimina lista si existe
+            record['supportUser'] = record.pop('custbody_ientc_order_support_text', None)
+            record.pop('custbody_ientc_order_support', None)  # ✅ elimina lista si existe
+            record['typeValue'] = {"1": "ODT", "2": "ODS", "3": "ODR", "4": "ODD", "5": "ODA"}.get((v := record.pop('custbody_ientc_order_type_value', None)), v)
+            record['startedAt'] = normalize_trandate(s) if (s := record.pop('startdate', None)) not in ("", None) else None
+            record['finishedAt'] = normalize_trandate(e) if (e := record.pop('enddate', None)) not in ("", None) else None
+            record['createdAt'] = normalize_trandate((record.pop('datecreated', None) or '').split(' ')[0] or None)
+            record['odx'] = record.pop('tranid')
+            record['comments'] = record.pop('custbody_ientc_order_odxmemo')
+            record['statusValue'] = record.pop('custbody_ientc_order_status_text', None)
+            record.pop('custbody_ientc_order_status', None)  # ✅ elimina lista si existe
+            record['updateaccount'] = record.pop('custbody_ientc_order_updatetype')
+            record['accountNumber'] = record.pop('custbody_ientc_order_account_text', None)
+            record.pop('custbody_ientc_order_account', None)  # ✅ elimina lista si existe
+            record['totalAccount'] = record.pop('total')
+            record['chargeType'] = record.pop('custbody_ientc_order_type_text', None)
+            record.pop('custbody_ientc_order_type', None)  # ✅ elimina lista si existe
+            record['cancelledBy'] = record.pop('custbody_ientc_order_cancelby_text', None)
+            record.pop('custbody_ientc_order_cancelby', None)  # ✅ elimina lista si existe
+            record['latitude'] = (lambda v:
+                (float(m.group(0)) if (m := re.search(r"-?\d+(?:\.\d+)?", v.replace(',', '.'))) else None)
+                if v and (v := v.strip()).lower() not in ("na", "") else None)(record.pop('custbody_ientc_order_account.custrecord_ientc_cs_latitude', None))
+            record['longitude'] = (lambda v:
+                (float(m.group(0)) if (m := re.search(r"-?\d+(?:\.\d+)?", v.replace(',', '.'))) else None)
+                if v and (v := v.strip()).lower() not in ("na", "") else None)(record.pop('custbody_ientc_order_account.custrecord_ientc_cs_longitude', None))
+            
+            for key, value in record.items():
+                if isinstance(value, list):
+                    record[key] = None
 
-            # Revisamos si existe una factura en la base de datos
-            factura = db.execute(
-                "SELECT * FROM facturas WHERE id = :id",
-                {"id": record['id']},
+            # Revisamos si existe una odxs en la base de datos
+            preodxs = db.execute(
+                "SELECT * FROM odxs WHERE odx = :odx",
+                {"odx": record['odx']},
                 fetch=True
             )
 
-            if not factura:
-                # Si no existe la factura insertamos la factura con total_pagos, total_nc y total_debt en 0.0
+            if not preodxs:
+                # Si no existe la odxs insertamos la odxs con total_pagos, total_nc y total_debt en 0.0
                 columns = ", ".join(record.keys())
                 placeholders = ", ".join([f":{k}" for k in record.keys()])
-                sql = f"INSERT INTO facturas ({columns}) VALUES ({placeholders})"
+                sql = f"INSERT INTO odxs ({columns}) VALUES ({placeholders})"
                 db.execute(sql, record)
             else:
-                # Si la factura existe, actualizamos los datos dejando los datos total_pagos, total_nc y total_debt como se encuentren
+                # Si la odxs existe, actualizamos los datos
                 set_clause = ", ".join([f"{k} = :{k}" for k in record.keys() if k != "id"])
-                sql = f"UPDATE facturas SET {set_clause} WHERE id = :id"
+                sql = f"UPDATE odxs SET {set_clause} WHERE odx = :odx"
                 db.execute(sql, record)
         
         db.close()
         print(logs)
     except Exception as e:
         logs["Error"] = f"Error en el código: {e}"
+        print(traceback.format_exc())  # 🔥 Muestra exactamente la línea del error
         print(logs)
 
 
 def main():
-    start_date = datetime.strptime("06/11/2025", "%d/%m/%Y") 
-    end_date = datetime.strptime("06/11/2025", "%d/%m/%Y")
+    start_date = datetime.now() - timedelta(days=1)
+    end_date = datetime.now() - timedelta(days=1)
     access_token = get_iso_bearer_token()
-    for i in range(365):    
+    for _ in range(2):    
         print(start_date.strftime("%d/%m/%Y"))
         lambda_handler(start_date.strftime("%d/%m/%Y"), end_date.strftime("%d/%m/%Y"), access_token)
-        if start_date.strftime("%d/%m/%Y") == "06/11/2025":
-            break
-        
         start_date += timedelta(days=1)
         end_date += timedelta(days=1)
 

@@ -25,14 +25,18 @@ def flatten_record(record: dict) -> dict:
 
     # Eliminamos llaves innecesarias de un solo golpe
     remove_fields = {
-        "internalid_value", "internalid_text",
-        "custbody_ientc_cs_related_account_value",
-        "custbody_ientc_cs_related_account",
-        "currency_text", "currency_value",
-        "custbody_ientc_invoice_type_value",
-        "custbody_ientc_invoice_type",
-        "custbody_ientc_invoice_type_text",
-        "tranid"
+        "recordType",
+        "id",
+        "internalid_value",
+        "internalid_text",
+        "type",
+        "custbody_ientc_order_account_value",
+        "custbody_ientc_order_status_value",
+        "custbody_ientc_order_support_value",
+        "custbody_ientc_order_cancelby_value",
+        "custbody_ientc_order_assigned_tech_value",
+        "salesrep_value"
+
     }
     flat = {k: v for k, v in flat.items() if k not in remove_fields}
     return flat

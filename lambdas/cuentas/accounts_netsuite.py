@@ -4,6 +4,7 @@ from database_utils import PostgresDB, MySQLDB
 from utils import flatten_record, normalize_trandate
 from typing import Any
 from datetime import datetime, timedelta
+import os
 import json
 import sys
 import traceback #para indicar linea donde hubo error
@@ -11,9 +12,9 @@ import re
 
 def lambda_handler(start_date, end_date, access_token) -> Any:
     try:
-        print('cuentas__lambda_handler')
+        print('cuentas_lambda_handler')
         logs = {
-            "name": "cuentas__lambda_handler"
+            "name": "cuentas_lambda_handler"
         }
         if access_token is None:
             logs["access_token"] = "Error al obtener access token."
@@ -96,13 +97,12 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
             record['colonia'] = record.pop('custrecord_ientc_cs_colonia_text', None)
             record.pop('custrecord_ientc_cs_colonia', None)  # ✅ elimina lista si existe
             record['localidad'] = record.pop('custrecord_ientc_cs_localidad', None)
-            record['latitude'] = (lambda v: float(re.sub(r"[^0-9.\-]", "", v)) 
-                                if v and (v := v.strip()).lower() not in ("na", "") else None
-                                )(record.pop('custrecord_ientc_cs_latitude', None))
-
-            record['longitude'] = (lambda v: float(re.sub(r"[^0-9.\-]", "", v)) 
-                                if v and (v := v.strip()).lower() not in ("na", "") else None
-                                )(record.pop('custrecord_ientc_cs_longitude', None))
+            record['latitude'] = (lambda v:
+                (float(m.group(0)) if (m := re.search(r"-?\d+(?:\.\d+)?", v.replace(',', '.'))) else None)
+                if v and (v := v.strip()).lower() not in ("na", "") else None)(record.pop('custrecord_ientc_cs_latitude', None))
+            record['longitude'] = (lambda v:
+                (float(m.group(0)) if (m := re.search(r"-?\d+(?:\.\d+)?", v.replace(',', '.'))) else None)
+                if v and (v := v.strip()).lower() not in ("na", "") else None)(record.pop('custrecord_ientc_cs_longitude', None))
             record['accountReferences'] = record.pop('custrecord_ientc_cs_dirreference')
 
             for key, value in record.items():
@@ -137,15 +137,12 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
 
 def main():
-    start_date = datetime.strptime("01/01/2025", "%d/%m/%Y") 
-    end_date = datetime.strptime("11/11/2025", "%d/%m/%Y")
+    start_date = datetime.now() - timedelta(days=1)
+    end_date = datetime.now() - timedelta(days=1)
     access_token = get_iso_bearer_token()
-    for i in range(365):    
+    for _ in range(2):    
         print(start_date.strftime("%d/%m/%Y"))
         lambda_handler(start_date.strftime("%d/%m/%Y"), end_date.strftime("%d/%m/%Y"), access_token)
-        if start_date.strftime("%d/%m/%Y") == "01/01/2025":
-            break
-        
         start_date += timedelta(days=1)
         end_date += timedelta(days=1)
 
