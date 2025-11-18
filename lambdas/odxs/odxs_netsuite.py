@@ -49,11 +49,11 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
         # Connect database
         db = MySQLDB(
-            user="root",
-            password="",
-            host="127.0.0.1",
-            port=3306,        
-            database="olimpo-db"
+            host= "170.239.148.19",
+            user= "ientc-pbi",
+            password= "K3nw00d.1%40",
+            database= "ientc-db",
+            port= 3306
         )
         db.connect()
 
@@ -72,13 +72,14 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
             record['finishedAt'] = normalize_trandate(e) if (e := record.pop('enddate', None)) not in ("", None) else None
             record['createdAt'] = normalize_trandate((record.pop('datecreated', None) or '').split(' ')[0] or None)
             record['odx'] = record.pop('tranid')
+            record['totalAccount'] = (float(v) if (v := record.pop('custbody_ientc_order_account.custrecord_ientc_cs_total', "")) not in ("", None) else None)
             record['comments'] = record.pop('custbody_ientc_order_odxmemo')
             record['statusValue'] = record.pop('custbody_ientc_order_status_text', None)
             record.pop('custbody_ientc_order_status', None)  # ✅ elimina lista si existe
             record['updateaccount'] = record.pop('custbody_ientc_order_updatetype')
             record['accountNumber'] = record.pop('custbody_ientc_order_account_text', None)
             record.pop('custbody_ientc_order_account', None)  # ✅ elimina lista si existe
-            record['totalAccount'] = record.pop('total')
+            record['chargeAmount'] = record.pop('total')
             record['chargeType'] = record.pop('custbody_ientc_order_type_text', None)
             record.pop('custbody_ientc_order_type', None)  # ✅ elimina lista si existe
             record['cancelledBy'] = record.pop('custbody_ientc_order_cancelby_text', None)
@@ -122,12 +123,15 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
 
 def main():
-    start_date = datetime.now() - timedelta(days=1)
-    end_date = datetime.now() - timedelta(days=1)
+    start_date = datetime.strptime("18/11/2025", "%d/%m/%Y") 
+    end_date = datetime.strptime("18/11/2025", "%d/%m/%Y")
     access_token = get_iso_bearer_token()
-    for _ in range(2):    
+    for i in range(365):    
         print(start_date.strftime("%d/%m/%Y"))
         lambda_handler(start_date.strftime("%d/%m/%Y"), end_date.strftime("%d/%m/%Y"), access_token)
+        if start_date.strftime("%d/%m/%Y") == "18/11/2025":
+            break
+        
         start_date += timedelta(days=1)
         end_date += timedelta(days=1)
 

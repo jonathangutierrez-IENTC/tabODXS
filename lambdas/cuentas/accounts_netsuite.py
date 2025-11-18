@@ -45,11 +45,11 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
         # Connect database
         db = MySQLDB(
-            user="root",
-            password="",
-            host="127.0.0.1",
-            port=3306,        
-            database="olimpo-db"
+            host= "170.239.148.19",
+            user= "ientc-pbi",
+            password= "K3nw00d.1%40",
+            database= "ientc-db",
+            port= 3306
         )
         db.connect()
 
@@ -137,12 +137,15 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
 
 def main():
-    start_date = datetime.now() - timedelta(days=1)
-    end_date = datetime.now() - timedelta(days=1)
+    start_date = datetime.strptime("13/11/2025", "%d/%m/%Y") 
+    end_date = datetime.strptime("18/11/2025", "%d/%m/%Y")
     access_token = get_iso_bearer_token()
-    for _ in range(2):    
+    for i in range(365):    
         print(start_date.strftime("%d/%m/%Y"))
         lambda_handler(start_date.strftime("%d/%m/%Y"), end_date.strftime("%d/%m/%Y"), access_token)
+        if start_date.strftime("%d/%m/%Y") == "18/11/2025":
+            break
+        
         start_date += timedelta(days=1)
         end_date += timedelta(days=1)
 
