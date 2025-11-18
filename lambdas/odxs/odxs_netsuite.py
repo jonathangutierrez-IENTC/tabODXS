@@ -123,15 +123,12 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
 
 def main():
-    start_date = datetime.strptime("18/11/2025", "%d/%m/%Y") 
-    end_date = datetime.strptime("18/11/2025", "%d/%m/%Y")
+    start_date = datetime.now() - timedelta(days=1)
+    end_date = datetime.now() - timedelta(days=1)
     access_token = get_iso_bearer_token()
-    for i in range(365):    
+    for _ in range(2):    
         print(start_date.strftime("%d/%m/%Y"))
         lambda_handler(start_date.strftime("%d/%m/%Y"), end_date.strftime("%d/%m/%Y"), access_token)
-        if start_date.strftime("%d/%m/%Y") == "18/11/2025":
-            break
-        
         start_date += timedelta(days=1)
         end_date += timedelta(days=1)
 
