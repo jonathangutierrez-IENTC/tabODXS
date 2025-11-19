@@ -9,6 +9,7 @@ import json
 import sys
 import traceback #para indicar linea donde hubo error
 import re
+CACHE_FILE = "cuentas_cache.json"
 
 def lambda_handler(start_date, end_date, access_token) -> Any:
     try:
@@ -45,10 +46,10 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
         # Connect database
         db = MySQLDB(
-            host= "170.239.148.19",
-            user= "ientc-pbi",
-            password= "K3nw00d.1%40",
-            database= "ientc-db",
+            host= "127.0.0.1",
+            user= "root",
+            password= "",
+            database= "olimpo-db",
             port= 3306
         )
         db.connect()
@@ -59,7 +60,7 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
         # Rename keys and save in database
         for record in flattened_data_cabecera:
-            record['folio'] = record.pop('id')
+            record['idaccount'] = record.pop('id')
             record['accountNumber'] = record.pop('name')
             record['isMaster'] = record.pop('custrecord_ientc_cs_ismaster')
             record['masterAccount'] = record.pop('custrecord_ientc_cs_reference_text', None)
@@ -86,6 +87,7 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
             record['cancelledBy'] = record.pop('custrecord_ientc_cs_canceledby_text', None)
             record.pop('custrecord_ientc_cs_canceledby', None)  # ✅ elimina lista si existe
             record['businessName'] = record.pop('custrecord_ientc_cs_parent_text', None)
+            record['idclient'] = record.pop('custrecord_ientc_cs_parent_value', None)
             record.pop('custrecord_ientc_cs_parent', None)  # ✅ elimina lista si existe
             record['rfc'] = record.pop('custrecord_ientc_cs_parent.custentity_mx_rfc')
             record['financialSector'] = record.pop('custrecord_ientc_cs_parent.custentity_ientc_crm_secteconomico_text', None)
@@ -111,8 +113,8 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
             # Revisamos si existe una cuenta en la base de datos
             precuenta = db.execute(
-                "SELECT * FROM accounts WHERE folio = :folio",
-                {"folio": record['folio']},
+                "SELECT * FROM accounts WHERE idaccount = :idaccount",
+                {"idaccount": record['idaccount']},
                 fetch=True
             )
 
@@ -125,7 +127,7 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
             else:
                 # Si la cuenta existe, actualizamos los datos
                 set_clause = ", ".join([f"{k} = :{k}" for k in record.keys() if k != "id"])
-                sql = f"UPDATE accounts SET {set_clause} WHERE folio = :folio"
+                sql = f"UPDATE accounts SET {set_clause} WHERE idaccount = :idaccount"
                 db.execute(sql, record)
         
         db.close()
@@ -143,6 +145,9 @@ def main():
     for _ in range(2):    
         print(start_date.strftime("%d/%m/%Y"))
         lambda_handler(start_date.strftime("%d/%m/%Y"), end_date.strftime("%d/%m/%Y"), access_token)
+        if start_date.strftime("%d/%m/%Y") == "01/01/2025":
+            break
+        
         start_date += timedelta(days=1)
         end_date += timedelta(days=1)
 

@@ -30,7 +30,7 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
             columns='["internalid","custbody_ientc_order_support","custbody_ientc_order_assigned_tech","custbody_ientc_order_type",' \
             '"custbody_ientc_order_updatetype","startdate","enddate","tranid","custbody_ientc_order_odxmemo","custbody_ientc_order_status",' \
             '"custbody_ientc_order_account","total","custbody_ientc_order_cancelby","custbody_ientc_order_account.custrecord_ientc_cs_latitude",' \
-            '"custbody_ientc_order_account.custrecord_ientc_cs_longitude", "datecreated", "salesrep"]',
+            '"custbody_ientc_order_account.custrecord_ientc_cs_longitude", "datecreated", "salesrep", "trandate"]',
             filters=f'[["datecreated","within","{start_date}","{end_date}"],"AND",["mainline","is","T"]]'
         )
         print(f"✅ {len(odxs)} odxs descargadas desde NetSuite")
@@ -49,10 +49,10 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
 
         # Connect database
         db = MySQLDB(
-            host= "170.239.148.19",
-            user= "ientc-pbi",
-            password= "K3nw00d.1%40",
-            database= "ientc-db",
+            host= "127.0.0.1",
+            user= "root",
+            password= "",
+            database= "olimpo-db",
             port= 3306
         )
         db.connect()
@@ -70,6 +70,7 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
             record['typeValue'] = {"1": "ODT", "2": "ODS", "3": "ODR", "4": "ODD", "5": "ODA"}.get((v := record.pop('custbody_ientc_order_type_value', None)), v)
             record['startedAt'] = normalize_trandate(s) if (s := record.pop('startdate', None)) not in ("", None) else None
             record['finishedAt'] = normalize_trandate(e) if (e := record.pop('enddate', None)) not in ("", None) else None
+            record['doctrandate'] = normalize_trandate((record.pop('trandate', None) or '').split(' ')[0] or None)
             record['createdAt'] = normalize_trandate((record.pop('datecreated', None) or '').split(' ')[0] or None)
             record['odx'] = record.pop('tranid')
             record['totalAccount'] = (float(v) if (v := record.pop('custbody_ientc_order_account.custrecord_ientc_cs_total', "")) not in ("", None) else None)

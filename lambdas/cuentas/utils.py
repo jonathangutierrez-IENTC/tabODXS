@@ -44,7 +44,6 @@ def flatten_record(record: dict) -> dict:
         "custrecord_ientc_cs_item_value",
         "owner_value",
         "owner_text",
-        "custrecord_ientc_cs_parent_value",
         "custrecord_ientc_cs_parent.custentity_mx_sat_registered_name",
         "custrecord_ientc_cs_parent.custentity_ientc_crm_secteconomico_value",
         "custrecord_ientc_cs_state_value",
