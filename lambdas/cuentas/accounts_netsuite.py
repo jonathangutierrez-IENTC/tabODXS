@@ -145,9 +145,6 @@ def main():
     for _ in range(2):    
         print(start_date.strftime("%d/%m/%Y"))
         lambda_handler(start_date.strftime("%d/%m/%Y"), end_date.strftime("%d/%m/%Y"), access_token)
-        if start_date.strftime("%d/%m/%Y") == "01/01/2025":
-            break
-        
         start_date += timedelta(days=1)
         end_date += timedelta(days=1)
 
