@@ -10,6 +10,7 @@ import sys
 import traceback #para indicar linea donde hubo error
 import re
 
+CACHE_FILE = "odxs_cache.json"
 
 def lambda_handler(start_date, end_date, access_token) -> Any:
     try:
@@ -28,9 +29,9 @@ def lambda_handler(start_date, end_date, access_token) -> Any:
             forceCache=False,
             record_type='salesorder',
             columns='["internalid","custbody_ientc_order_support","custbody_ientc_order_assigned_tech","custbody_ientc_order_type",' \
-            '"custbody_ientc_order_updatetype","startdate","enddate","tranid","custbody_ientc_order_odxmemo","custbody_ientc_order_status",' \
-            '"custbody_ientc_order_account","total","custbody_ientc_order_cancelby","custbody_ientc_order_account.custrecord_ientc_cs_latitude",' \
-            '"custbody_ientc_order_account.custrecord_ientc_cs_longitude", "datecreated", "salesrep", "trandate"]',
+                    '"custbody_ientc_order_updatetype","startdate","enddate","tranid","custbody_ientc_order_odxmemo","custbody_ientc_order_status",' \
+                    '"custbody_ientc_order_account","total","custbody_ientc_order_cancelby","custbody_ientc_order_account.custrecord_ientc_cs_latitude",' \
+                    '"custbody_ientc_order_account.custrecord_ientc_cs_longitude", "datecreated", "salesrep", "trandate", "custbody_ientc_order_account.custrecord_ientc_cs_total"]',
             filters=f'[["datecreated","within","{start_date}","{end_date}"],"AND",["mainline","is","T"]]'
         )
         print(f"✅ {len(odxs)} odxs descargadas desde NetSuite")
